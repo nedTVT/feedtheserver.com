@@ -175,33 +175,17 @@ h2{
 .hero-left h1{
   font-family:'Bebas Neue', sans-serif;
   font-size:6rem;
-  letter-spacing:3px;
+  letter-spacing:2px;
   text-transform:uppercase;
+  color:var(--white);
   margin-bottom:20px;
-
-  background:linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #e6e6e6 20%,
-    #c0c0c0 45%,
-    #9e9e9e 60%,
-    #e6e6e6 80%,
-    #ffffff 100%
-  );
-
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  text-shadow:
-    0 2px 4px rgba(0,0,0,0.6),
-    0 6px 12px rgba(0,0,0,0.5);
 }
 .hero-left p{
-  font-size:1.2rem;
+  font-size:1.1rem;
+  line-height:1.35;
   color:var(--light-silver);
   max-width:650px;
   margin:auto;
-  letter-spacing:0.5px;
 }
 .hero-buttons{
 display:flex;
@@ -386,7 +370,7 @@ text-align:center;
   margin-top:6px;
   font-size:0.85rem;
   color:var(--light-silver);
-  line-height:1.2;
+ 
 }
 .slider-btn {
   position:absolute;
@@ -644,7 +628,7 @@ color:var(--light-silver);
 <section id="hero">
   <div class="hero-container">
     <div class="hero-left">
-      <h1>One Pack. One Goal.</h1>
+ <h1>One Pack. One Goal.</h1>
       <p>Powerful digital tools designed to accelerate your growth and scale your business with intelligent automation and modern infrastructure.</p>
       <div class="hero-buttons">
         <button>Get Started</button>
@@ -856,58 +840,27 @@ const prevBtn = document.querySelector('.slider-btn.prev');
 const nextBtn = document.querySelector('.slider-btn.next');
 
 let index = 0;
-let slideWidth = slide[0].getBoundingClientRect().width + parseInt(getComputedStyle(slides).gap);let autoScrollInterval;
-const scrollSpeed = 3000; // milliseconds
+let slideWidth = slide[0].offsetWidth + 20;
 
 function showSlide(idx) {
   slides.style.transform = `translateX(-${idx * slideWidth}px)`;
 }
 
-// Forward
 nextBtn.addEventListener('click', () => {
   index = (index + 1) % slide.length;
   showSlide(index);
-  resetAutoScroll();
 });
 
-// Back
 prevBtn.addEventListener('click', () => {
   index = (index - 1 + slide.length) % slide.length;
   showSlide(index);
-  resetAutoScroll();
 });
 
-// Auto scroll
-function startAutoScroll() {
-  autoScrollInterval = setInterval(() => {
-    index = (index + 1) % slide.length;
-    showSlide(index);
-  }, scrollSpeed);
-}
-
-// Pause auto scroll on hover
-document.querySelector('.slider').addEventListener('mouseenter', () => {
-  clearInterval(autoScrollInterval);
-});
-
-document.querySelector('.slider').addEventListener('mouseleave', () => {
-  startAutoScroll();
-});
-
-// Reset auto scroll after manual click
-function resetAutoScroll() {
-  clearInterval(autoScrollInterval);
-  startAutoScroll();
-}
-
-// Initialize
 window.addEventListener('load', () => {
-  slideWidth = slide[0].offsetWidth + 20; // recalc in case of resize
+  slideWidth = slide[0].offsetWidth + 20;
   showSlide(index);
-  startAutoScroll();
 });
 
-// Optional: recalc slideWidth on window resize
 window.addEventListener('resize', () => {
   slideWidth = slide[0].offsetWidth + 20;
   showSlide(index);
